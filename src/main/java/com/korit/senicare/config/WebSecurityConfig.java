@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -15,6 +16,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.korit.senicare.filter.JwtAuthenticationFilter;
+import com.korit.senicare.service.implement.OAuth2UserServiceImplement;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class WebSecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final OAuth2UserServiceImplement oAuth2Serivce;
 
     @Bean
     protected SecurityFilterChain configure(HttpSecurity security) throws Exception {
@@ -43,8 +46,14 @@ public class WebSecurityConfig {
             .cors(cors -> cors.configurationSource(configurationSource()))
             // URL 패턴 및 HTTP 메서드에 따라 인증 및 인가 여부 지정
             .authorizeHttpRequests(request -> request
-                .requestMatchers("/api/v1/auth/**", "/").permitAll()
+                .requestMatchers("/api/v1/auth/**","/oauth2/callback/*", "/").permitAll()
                 .anyRequest().authenticated()
+            )
+            // oAuth2 로그인 적용
+            .oauth2Login(oauth2 -> oauth2
+                .redirectionEndpoint(endpoint -> endpoint.baseUri("/oauth2/callback/*"))
+                .authorizationEndpoint(endpoint -> endpoint.baseUri("/api/v1/auth/sns-sign-in"))
+                .userInfoEndpoint(endpoint -> endpoint.userService(oAuth2Serivce))
             )
             // 필터 등록
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
