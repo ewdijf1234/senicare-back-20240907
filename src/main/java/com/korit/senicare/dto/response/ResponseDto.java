@@ -11,12 +11,12 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ResponseDto {
-    
+
     private String code;
     private String message;
 
     public static ResponseEntity<ResponseDto> success() {
-        ResponseDto responseBody = new ResponseDto(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.SUCCCESS, ResponseMessage.SUCCESS);
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
@@ -35,6 +35,11 @@ public class ResponseDto {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
     }
 
+    public static ResponseEntity<ResponseDto> noExistUserId() {
+        ResponseDto responseBody = new ResponseDto(ResponseCode.NO_EXIST_USER_ID, ResponseMessage.NO_EXIST_USER_ID);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseBody);
+    }
+
     public static ResponseEntity<ResponseDto> telAuthFail() {
         ResponseDto responseBody = new ResponseDto(ResponseCode.TEL_AUTH_FAIL, ResponseMessage.TEL_AUTH_FAIL);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
@@ -46,17 +51,18 @@ public class ResponseDto {
     }
 
     public static ResponseEntity<ResponseDto> messageSendFail() {
-        ResponseDto reponseBody = new ResponseDto(ResponseCode.MESSAGE_SEND_FAIL, ResponseMessage.MESSAGE_SEND_FAIL);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(reponseBody);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.MESSAGE_SEND_FAIL, ResponseMessage.MESSAGE_SEND_FAIL);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 
     public static ResponseEntity<ResponseDto> tokenCreateFail() {
-        ResponseDto reponseBody = new ResponseDto(ResponseCode.TOKEN_CREATE_FAIL, ResponseMessage.TOKEN_CREATE_FAIL);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(reponseBody);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.TOKEN_CREATE_FAIL, ResponseMessage.TOKEN_CREATE_FAIL);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
 
     public static ResponseEntity<ResponseDto> databaseError() {
-        ResponseDto reponseBody = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(reponseBody);
+        ResponseDto responseBody = new ResponseDto(ResponseCode.DATABASE_ERROR, ResponseMessage.DATABASE_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseBody);
     }
+    
 }
