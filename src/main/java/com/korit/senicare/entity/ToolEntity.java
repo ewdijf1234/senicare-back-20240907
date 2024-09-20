@@ -1,5 +1,6 @@
 package com.korit.senicare.entity;
 
+import com.korit.senicare.dto.request.tool.PatchToolRequestDto;
 import com.korit.senicare.dto.request.tool.PostToolRequestDto;
 
 import jakarta.persistence.Entity;
@@ -32,5 +33,12 @@ public class ToolEntity {
         this.purpose = dto.getPurpose();
         this.count = dto.getCount();
     }
+
+    public void patch(PatchToolRequestDto dto) {
+        this.name = dto.getName();
+        this.purpose = dto.getPurpose();
+        this.count = dto.getCount();
+    }
+    // 생성 후 수정할 때 사용하기 때문에 toolNumber는 원래 조회하던 값을 가지게 된다. (patch) >> 사용할 때의 위치가 다르다.
 
 }
