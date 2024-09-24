@@ -20,4 +20,4 @@ public interface ResponseCode {
     String TOKEN_CREATE_FAIL = "TCF";
     String DATABASE_ERROR = "DBE";
 
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             

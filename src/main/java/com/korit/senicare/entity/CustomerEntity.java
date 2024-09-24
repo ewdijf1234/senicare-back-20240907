@@ -1,5 +1,7 @@
 package com.korit.senicare.entity;
 
+import com.korit.senicare.dto.request.customer.PostCustomerRequestDto;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,11 +17,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name="customers")
-@Table(name = "customers")
+@Table(name="customers")
 public class CustomerEntity {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer customerNumber;
     private String profileImage;
     private String name;
@@ -27,5 +29,14 @@ public class CustomerEntity {
     private String charger;
     private String address;
     private String location;
+
+    public CustomerEntity(PostCustomerRequestDto dto) {
+        this.profileImage = dto.getProfileImage();
+        this.name = dto.getName();
+        this.birth = dto.getBirth();
+        this.charger = dto.getCharger();
+        this.address = dto.getAddress();
+        this.location = dto.getLocation();
+    }
 
 }
